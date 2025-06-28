@@ -1,0 +1,11 @@
+services:
+  plexfm:
+    container_name: plexfm
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - LAST_FM_API_KEY=key
+      - LAST_FM_SHARED_SECRET=key
+      - LAST_FM_SESSION_KEY=key
+      - WEBHOOK_API_KEY=key
