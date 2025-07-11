@@ -18,7 +18,7 @@ This can then be accessed from the plex container (assuming same network) via `h
 
 ## Setup steps 
 ### Gathering Environment Variables
-Create an app at {https://www.last.fm/api/account/create](https://www.last.fm/api/account/create):
+Create an app at [https://www.last.fm/api/account/create](https://www.last.fm/api/account/create):
   - Change **LAST_FM_API_KEY** to the created API Key
   - Change **LAST_FM_SHARED_SECRET** to the created Shared Secret
 
