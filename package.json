@@ -1,5 +1,5 @@
 {
-  "name": "@Tepyolas/PlexLastFM",
+  "name": "@xiliourt/PlexLastFM",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
