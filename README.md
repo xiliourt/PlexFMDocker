@@ -33,5 +33,5 @@ Change **WEBHOOK_API_KEY** to a random string
 - **(NOT RECOMMENDED)** If on a different docker network but same host `http://127.0.0.1:3000/webhook?apiKey=<WEBHOOK_API_KEY>`
   - *(You'll need to add port 3000:3000 to docker-compose.yml. The webhook may be exposed further than you intend.)*
 - **(STRONGLY NOT RECOMMENDED)** if on a different host and/or network `http://(IPAddresss):3000?apiKey=<WEBHOOK_API_KEY>`
-  - *(You'll need to add exposing port 3000 to docker-compose.yml and potentially firewall rules. The webhook **will** be exposed to the open internet.)*
+  - *(You'll need to add port 3000:3000 to docker-compose.yml and firewall rules. The webhook **will** be exposed to the open internet.)*
 
