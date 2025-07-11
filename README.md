@@ -7,9 +7,7 @@ The official Plex-LastFM intergration doesn't support displaying what your curre
 services:
   plexfm:
     container_name: plexfm
-    buiid .
-    ports:
-      - 3000:3000
+    image: ghcr.io/xiliourt/plexfm:latest
     environment:
       - LAST_FM_API_KEY=<API Key>
       - LAST_FM_SHARED_SECRET=<Shared secret>
@@ -17,14 +15,7 @@ services:
       - WEBHOOK_API_KEY=<Just a random string added to the url as apiKey param for security>
 ```
 
-## Note
-It can be used on a docker network, ie
-```
-networks:
-  - backnet
-```
-
-Then accessed from the plex container (assuming same network) via `http://plexfm/webhook?apiKey=<WEBHOOK_API_KEY>`
+This can then be accessed from the plex container (assuming same network) via `http://plexfm/webhook?apiKey=<WEBHOOK_API_KEY>`. For external access you'll need to expose port 3000 in docker / firewall / etc.
 
 ## Setup steps 
 ### Requires below env variables (change in docker-compose.yml code above)
@@ -37,10 +28,10 @@ Then accessed from the plex container (assuming same network) via `http://plexfm
 
 ### LastFM Session Key Steps:
 - Create an app at https://www.last.fm/api/account/create
-  - Change API_KEY in the script to the created API_KEY (also add to **LAST_FM_API_KEY**)
-  - Change SHARED_KEY in the script to the SHARED_KEY (also add to **LAST_FM_SHARED_SECRET**)
+  - Change API_KEY in the script below to the created API_KEY (also add to **LAST_FM_API_KEY**)
+  - Change SHARED_KEY in the script below to the SHARED_KEY (also add to **LAST_FM_SHARED_SECRET**)
 - Run the script
-- When prompted, open the URL and authenticate (you're giving your own API app access to your account)
+- When prompted, open the URL and authenticate (you're giving your own API access to your account)
 - Press Enter on the bash script
 - Add the outputted session key **env.LAST_FM_SK**
 
