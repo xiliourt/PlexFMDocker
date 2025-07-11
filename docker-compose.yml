@@ -5,7 +5,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - LAST_FM_API_KEY=key
-      - LAST_FM_SHARED_SECRET=key
-      - LAST_FM_SESSION_KEY=key
-      - WEBHOOK_API_KEY=key
+      - LAST_FM_API_KEY=<LastFM API Key>
+      - LAST_FM_SHARED_SECRET=<Last FM Secret Key>
+      - LAST_FM_SESSION_KEY=<Last FM Session Key>
+      - WEBHOOK_API_KEY=<Random string you add to your webhook to pretend to authenticate it>
