@@ -28,7 +28,7 @@ Create a session key by following the prompts [here](https://xiliourt.github.io/
 Change **WEBHOOK_API_KEY** to a random string
 - Your webhook url will be *(url)*/webhook?apiKey=<WEBHOOK_API_KEY>. *(where <WEBHOOK_API_KEY> is the random string you set)*
 
-Example URLs:
+### Example Webhook URLs:
 - **(RECOMMENDED)** If on the same docker network as plex: `http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>`
 - **(NOT RECOMMENDED)** If on a different docker network but same host `http://127.0.0.1:3000/webhook?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml)*
 - **(NOT RECOMMENDED)** if on a different host and/or network `http://(IPAddresss):3000?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml and potentially firewall rules)*
