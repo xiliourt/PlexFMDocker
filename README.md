@@ -15,83 +15,31 @@ services:
       - WEBHOOK_API_KEY=<Just a random string added to the url as apiKey param for security>
 ```
 
-This can then be accessed from the plex container (assuming same network) via `http://plexfm/webhook?apiKey=<WEBHOOK_API_KEY>`. For external access you'll need to expose port 3000 in docker / firewall / etc.
+This can then be accessed from the plex container (assuming same network) via `http://plexfm/webhook?apiKey=<WEBHOOK_API_KEY>`.
 
 ## Setup steps 
 ### Requires below env variables (change in docker-compose.yml code above)
-- LAST_FM_API_KEY=<API Key>
-- LAST_FM_SHARED_SECRET=<Shared secret>
-- LAST_FM_SESSION_KEY=<Session Key (see steps below)
-- WEBHOOK_API_KEY=<A random string to append to requests as a param>
-  - This will be your webhook url, ie enter http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY> into plex
-  - If plex is on the same docker network, you can use http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY> and remove exposing port 3000.
+- LAST_FM_API_KEY=<API_KEY>
+- LAST_FM_SHARED_SECRET=<SHARED_SECRET>
+- LAST_FM_SESSION_KEY=<SESSION_KEY *(see steps below)*>
+- WEBHOOK_API_KEY=<A random string appended to the webhook URL - The most security I could be bothered adding to the API as mine runs locally>
+  - This will be your webhook url, ie enter http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY> into plex *(you'll need to add exposing port 3000 to docker compose)*
+  - If plex is on the same docker network, you can use http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>.
 
 ### LastFM Session Key Steps:
 - Create an app at https://www.last.fm/api/account/create
-  - Change API_KEY in the script below to the created API_KEY (also add to **LAST_FM_API_KEY**)
-  - Change SHARED_KEY in the script below to the SHARED_KEY (also add to **LAST_FM_SHARED_SECRET**)
-- Run the script
-- When prompted, open the URL and authenticate (you're giving your own API access to your account)
-- Press Enter on the bash script
-- Add the outputted session key **env.LAST_FM_SK**
+  - Change **LAST_FM_API_KEY** to the created API Key
+  - Change **LAST_FM_SHARED_SECRET** to the created Shared Secret
+- Use the generator below to create a session token (requires authenticating your LastFM account with the API 'app' you just created above)
+  - Either open http://(ip):3000 or on Gitpages [here](https://xiliourt.github.io/PlexFMDocker/) *(Git Actions simply pushes the 'public' dir to pages)*
+    - Enter the API_KEY and SHARED_SECRET
+    - Authenticate your LastFM account via the URL it provides
+    - Once authenticated, click 'Get Session Key'
+  - Change **LAST_FM_SESSION_KEY** to the session key gained above
+- Change **WEBHOOK_API_KEY** to a random string
+  - Your webhook url will be *(url)*/webhook?apiKey=<WEBHOOK_API_KEY>. *(where <WEBHOOK_API_KEY> is the random string you set)*
+    - If on the same docker network as plex: `http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>`
+    - If on a different network but same host `http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml)*
+    - **(NOT RECOMMENDED)** if on a different host and/or network `http://(IPAddresss):3000?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml and potentially firewall rules)*
 
-```
-#!/bin/bash
-API_KEY="YOUR_LASTFM_API_KEY"        # <--- REPLACE THIS
-SHARED_SECRET="YOUR_LASTFM_SHARED_SECRET" # <--- REPLACE THIS
-
-API_URL="http://ws.audioscrobbler.com/2.0/"
-
-# --- Functions ---
-# Function to calculate MD5 hash, cross-platform compatible
-calculate_md5() {
-    local input_string="$1"
-    # Try md5sum (Linux)
-    if command -v md5sum &> /dev/null; then
-        echo -n "$input_string" | md5sum | awk '{print $1}'
-    # Try openssl md5 (macOS/BSD)
-    elif command -v openssl &> /dev/null; then
-        echo -n "$input_string" | openssl md5 | awk '{print $NF}'
-    else
-        echo "Error: Neither 'md5sum' nor 'openssl' found. Cannot calculate MD5 signature." >&2
-        exit 1
-    fi
-}
-
-echo "--- Last.fm Session Key Acquisition ---"
-echo "Step 1: Requesting a temporary authentication token..."
-TOKEN_RESPONSE=$(curl -s -X GET "$API_URL" \
-    -d "method=auth.getToken" \
-    -d "api_key=$API_KEY" \
-    -d "format=json")
-
-TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token') 
-AUTH_URL="http://www.last.fm/api/auth/?api_key=$API_KEY&token=$TOKEN"
-
-echo ""
-echo "Step 2: User authorization required."
-echo "Please open the following URL in your web browser, log in to Last.fm (if prompted),"
-echo "and grant access to your application. Then, return here and press Enter."
-echo ""
-echo "URL: $AUTH_URL"
-echo ""
-read -p "Press Enter to continue after authorization..."
-
-echo ""
-echo "Step 3: Request the session key using auth.getSession..."
-SIGNATURE_STRING="api_key${API_KEY}methodauth.getSessiontoken${TOKEN}${SHARED_SECRET}"
-API_SIG=$(calculate_md5 "$SIGNATURE_STRING")
-
-SESSION_RESPONSE=$(curl -s -X POST "$API_URL" \
-    -d "method=auth.getSession" \
-    -d "api_key=$API_KEY" \
-    -d "token=$TOKEN" \
-    -d "api_sig=$API_SIG" \
-    -d "format=json")
-
-echo "--- Success! Permanent Last.fm Session Key Obtained ---"
-echo ""Session Key: $(echo "$SESSION_RESPONSE" | jq -r '.session.key')"
-```
-
-If I get bored, I'll make the bash script a docker startup script so it sets up on first run... Idk
 
