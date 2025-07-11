@@ -22,12 +22,14 @@ This can then be accessed from the plex container (assuming same network) via `h
 Create an app at https://www.last.fm/api/account/create
   - Change **LAST_FM_API_KEY** to the created API Key
   - Change **LAST_FM_SHARED_SECRET** to the created Shared Secret
+
 Use the generator below to create a session token (requires authenticating your LastFM account with the API 'app' you just created above)
 - Either open http://(ip):3000 or on Gitpages [here](https://xiliourt.github.io/PlexFMDocker/) *(Git Actions simply pushes the 'public' dir to pages)*
   - Enter the API_KEY and SHARED_SECRET
   - Click 'Authenticate on Last.fm' and authenticate your LastFM account with your app
   - Once authenticated, click 'Get Session Key'
 - Change **LAST_FM_SESSION_KEY** to the session key gained above
+
 Change **WEBHOOK_API_KEY** to a random string
 - Your webhook url will be *(url)*/webhook?apiKey=<WEBHOOK_API_KEY>. *(where <WEBHOOK_API_KEY> is the random string you set)*
   - If on the same docker network as plex: `http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>`
