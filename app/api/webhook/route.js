@@ -124,7 +124,7 @@ async function sendLastFmRequest(method, { track, artist, album }, attempt = 1) 
 
 /**
  * Handles incoming POST requests from a webhook.
- * @param {Request} request - The incoming Next.js API request object.
+ * @param {Request} request - The incoming Plex Webhook Request
  * @returns {Promise<NextResponse>}
  */
 export async function POST(request, { params }) {
