@@ -1,8 +1,8 @@
 # Details
 The official Plex-LastFM intergration doesn't support displaying what your currently playing, meaning you wait for a track.scrobble (>50% played) before it's available for things like .fm bot. This API supports the track.updateNowPlaying, meaning .fm bot can pull what you're listening to instantly!
 
-# Setup
-## Docker compose file
+
+# Docker compose file
 ```
 services:
   plexfm:
@@ -18,7 +18,7 @@ services:
 This can then be accessed from the plex container (assuming same network) via `http://plexfm/webhook?apiKey=<WEBHOOK_API_KEY>`.
 
 ## Setup steps 
-### Requires below env variables (change in docker-compose.yml code above)
+### Setting Environment Variables (change in docker-compose.yml code above)
 - LAST_FM_API_KEY=<API_KEY>
 - LAST_FM_SHARED_SECRET=<SHARED_SECRET>
 - LAST_FM_SESSION_KEY=<SESSION_KEY *(see steps below)*>
@@ -26,7 +26,7 @@ This can then be accessed from the plex container (assuming same network) via `h
   - This will be your webhook url, ie enter http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY> into plex *(you'll need to add exposing port 3000 to docker compose)*
   - If plex is on the same docker network, you can use http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>.
 
-### LastFM Session Key Steps:
+### Gaining a LastFM Session Key Steps:
 - Create an app at https://www.last.fm/api/account/create
   - Change **LAST_FM_API_KEY** to the created API Key
   - Change **LAST_FM_SHARED_SECRET** to the created Shared Secret
