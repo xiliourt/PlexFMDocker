@@ -18,28 +18,26 @@ services:
 This can then be accessed from the plex container (assuming same network) via `http://plexfm/webhook?apiKey=<WEBHOOK_API_KEY>`.
 
 ## Setup steps 
-### Setting Environment Variables (change in docker-compose.yml code above)
-- LAST_FM_API_KEY=<API_KEY>
-- LAST_FM_SHARED_SECRET=<SHARED_SECRET>
-- LAST_FM_SESSION_KEY=<SESSION_KEY *(see steps below)*>
-- WEBHOOK_API_KEY=<A random string appended to the webhook URL - The most security I could be bothered adding to the API as mine runs locally>
-  - This will be your webhook url, ie enter http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY> into plex *(you'll need to add exposing port 3000 to docker compose)*
-  - If plex is on the same docker network, you can use http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>.
-
-### Gaining a LastFM Session Key Steps:
-- Create an app at https://www.last.fm/api/account/create
+### Gathering Environment Variables
+Create an app at https://www.last.fm/api/account/create
   - Change **LAST_FM_API_KEY** to the created API Key
   - Change **LAST_FM_SHARED_SECRET** to the created Shared Secret
-- Use the generator below to create a session token (requires authenticating your LastFM account with the API 'app' you just created above)
-  - Either open http://(ip):3000 or on Gitpages [here](https://xiliourt.github.io/PlexFMDocker/) *(Git Actions simply pushes the 'public' dir to pages)*
-    - Enter the API_KEY and SHARED_SECRET
-    - Authenticate your LastFM account via the URL it provides
-    - Once authenticated, click 'Get Session Key'
-  - Change **LAST_FM_SESSION_KEY** to the session key gained above
-- Change **WEBHOOK_API_KEY** to a random string
-  - Your webhook url will be *(url)*/webhook?apiKey=<WEBHOOK_API_KEY>. *(where <WEBHOOK_API_KEY> is the random string you set)*
-    - If on the same docker network as plex: `http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>`
-    - If on a different network but same host `http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml)*
-    - **(NOT RECOMMENDED)** if on a different host and/or network `http://(IPAddresss):3000?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml and potentially firewall rules)*
+Use the generator below to create a session token (requires authenticating your LastFM account with the API 'app' you just created above)
+- Either open http://(ip):3000 or on Gitpages [here](https://xiliourt.github.io/PlexFMDocker/) *(Git Actions simply pushes the 'public' dir to pages)*
+  - Enter the API_KEY and SHARED_SECRET
+  - Click 'Authenticate on Last.fm' and authenticate your LastFM account with your app
+  - Once authenticated, click 'Get Session Key'
+- Change **LAST_FM_SESSION_KEY** to the session key gained above
+Change **WEBHOOK_API_KEY** to a random string
+- Your webhook url will be *(url)*/webhook?apiKey=<WEBHOOK_API_KEY>. *(where <WEBHOOK_API_KEY> is the random string you set)*
+  - If on the same docker network as plex: `http://plexfm:3000/webhook?apiKey=<WEBHOOK_API_KEY>`
+  - If on a different network but same host `http://localhost:3000/webhook?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml)*
+  - **(NOT RECOMMENDED)** if on a different host and/or network `http://(IPAddresss):3000?apiKey=<WEBHOOK_API_KEY>` *(You'll need to add exposing port 3000 to docker-compose.yml and potentially firewall rules)*
 
+
+### Environment Variables
+- **LAST_FM_API_KEY**=<API_KEY>
+- **LAST_FM_SHARED_SECRET**=<SHARED_SECRET>
+- **LAST_FM_SESSION_KEY**=<SESSION_KEY (see steps below)>
+- **WEBHOOK_API_KEY**=<apiKey_string>
 
