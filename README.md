@@ -22,7 +22,7 @@ Create an app at [https://www.last.fm/api/account/create](https://www.last.fm/ap
   - Change **LAST_FM_API_KEY** to the created API Key
   - Change **LAST_FM_SHARED_SECRET** to the created Shared Secret
 
-Create a session key by following the prompt [here](https://xiliourt.github.io/PlexFMDocker/) *(it's identical to http://(ip):3000 if you want to use it locally)*
+Create a session key by following the prompts [here](https://xiliourt.github.io/PlexFMDocker/) *(it's identical to http://(ip):3000 if you want to use it locally, if you prefer)*
 - Change **LAST_FM_SESSION_KEY** to the session key generated
 
 Change **WEBHOOK_API_KEY** to a random string
