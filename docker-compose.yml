@@ -1,0 +1,9 @@
+services:
+  plexfm:
+    container_name: plexfm
+    image: ghcr.io/xiliourt/plexfm:latest
+    environment:
+      - LAST_FM_API_KEY=<API Key>
+      - LAST_FM_SHARED_SECRET=<Shared secret>
+      - LAST_FM_SESSION_KEY=<Session Key (see steps below)
+      - WEBHOOK_API_KEY=<Just a random string added to the url as apiKey param for security>
