@@ -13,6 +13,8 @@ on:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
     runs-on: ubuntu-latest
     permissions:
       contents: read
